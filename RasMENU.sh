@@ -1,5 +1,5 @@
 #!/bin/bash
-# RaMENU Ver.0.1
+# RasMENU Ver.0.1a
 #   RaSCSI Image Mount Support Tool
 #     Copyright (C) 2020 @taneken2000
 
@@ -40,10 +40,9 @@ do
     ((i++))
 done
 
-#result=$(whiptail --title "RaSCSI MOUNT MENU" --menu "`sudo rasctl -l`" 36 80 12 "${files[@]}" 3>&2 2>&1 1>&3-)
 RESID=$(whiptail --title "RaSCSI MOUNT MENU" --menu "`rasctl -l`" 0 0 0 ${files[@]} 3>&2 2>&1 1>&3-)
 RET=$?
-echo $RET
+#echo $RET
 
 if [ $RET -eq 255 ]; then
     break;
@@ -52,13 +51,10 @@ fi
 # image list
 #############
 i=0
-s=0
 for f in `find ${IMAGE_PATH} -iname "*.HDS" | sort`
 do
     IMAGE[i]="${f}"
     ((i++))
-    ((s++))
-#   IMAGE[i]="OFF"
     IMAGE[i]="${f}"
     ((i++))
 done
@@ -71,7 +67,7 @@ fi
 
 RESFILE=$(whiptail --notags --title "Select IMAGE FILE" --menu "`rasctl -l`" 36 72 15 ${IMAGE[@]} 3>&2 2>&1 1>&3-)
 RET=$?
-echo $RET
+#echo $RET
 #echo "ID:"$RESID "FILE:"$RESFILE
 if [ $RET -eq 255 ]; then
     :
