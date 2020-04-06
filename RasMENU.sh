@@ -41,7 +41,7 @@ do
 done
 
 #result=$(whiptail --title "RaSCSI MOUNT MENU" --menu "`sudo rasctl -l`" 36 80 12 "${files[@]}" 3>&2 2>&1 1>&3-)
-RESID=$(whiptail --title "RaSCSI MOUNT MENU" --menu "`rasctl -l`" 36 72 12 ${files[@]} 3>&2 2>&1 1>&3-)
+RESID=$(whiptail --title "RaSCSI MOUNT MENU" --menu "`rasctl -l`" 0 0 0 ${files[@]} 3>&2 2>&1 1>&3-)
 RET=$?
 echo $RET
 
