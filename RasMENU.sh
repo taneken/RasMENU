@@ -1,14 +1,20 @@
 #!/bin/bash
-# RaMENU Ver.0.1b
+# RaMENU Ver.0.1c
 #   RaSCSI Image Mount Support Tool
 #     Copyright (C) 2020 @taneken2000
+
+#引数からパスを取得
+if [ $1 ]; then
+    IMAGE_PATH="$1"
+else
+    IMAGE_PATH="/home/pi/hdd/"      # デフォルトのイメージファイル保存場所を指定
+fi
 
 #無限ループ
 while true
 do
 
-IMAGE_PATH="/home/pi/hdd/"      # 各々の保存場所を指定
-
+#配列初期化
 SCSI_ID=(0 1 2 3 4 5 6)
 SCSI_HDD=("none" "none" "none" "none" "none" "none" "bridge")
 files=()
