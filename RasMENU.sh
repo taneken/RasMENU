@@ -1,5 +1,5 @@
 #!/bin/bash
-# RasMENU Ver.0.1a
+# RaMENU Ver.0.1b
 #   RaSCSI Image Mount Support Tool
 #     Copyright (C) 2020 @taneken2000
 
@@ -40,6 +40,8 @@ do
     ((i++))
 done
 
+
+#SCSI選択画面表示
 RESID=$(whiptail --title "RaSCSI MOUNT MENU" --menu "`rasctl -l`" 0 0 0 ${files[@]} 3>&2 2>&1 1>&3-)
 RET=$?
 #echo $RET
@@ -51,7 +53,8 @@ fi
 # image list
 #############
 i=0
-for f in `find ${IMAGE_PATH} -iname "*.HDS" | sort`
+#for f in `find ${IMAGE_PATH} -iname "*.HDS" | sort`
+for f in `find ${IMAGE_PATH} \( -iname "*.HD[FSNAI]" -o -iname "*.NHD" -o -iname "*.MOS" -o -iname "*.ISO" \) | sort`
 do
     IMAGE[i]="${f}"
     ((i++))
@@ -59,13 +62,15 @@ do
     ((i++))
 done
 
+#指定したSCSI-IDにすでにマウント済だったらイジェクトを一番上に表示する
 if [ ${SCSI_HDD[$RESID]} == "none" ]; then
     :
 else
     IMAGE=("<EJECT>" "<EJECT>" ${IMAGE[@]})
 fi
 
-RESFILE=$(whiptail --notags --title "Select IMAGE FILE" --menu "`rasctl -l`" 36 72 15 ${IMAGE[@]} 3>&2 2>&1 1>&3-)
+#イメージ選択画面表示
+RESFILE=$(whiptail --notags --title "Select IMAGE FILE" --menu "`rasctl -l`" 0 0 0 ${IMAGE[@]} 3>&2 2>&1 1>&3-)
 RET=$?
 #echo $RET
 #echo "ID:"$RESID "FILE:"$RESFILE
