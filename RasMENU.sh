@@ -1,5 +1,5 @@
 #!/bin/bash
-# RaMENU Ver.0.1c
+# RaMENU Ver.0.1d
 #   RaSCSI Image Mount Support Tool
 #     Copyright (C) 2020 @taneken2000
 
@@ -9,6 +9,9 @@ if [ $1 ]; then
 else
     IMAGE_PATH="/home/pi/hdd/"      # デフォルトのイメージファイル保存場所を指定
 fi
+
+#バージョン情報取得
+TTL="`rascsi -h|head -1`"
 
 #無限ループ
 while true
@@ -48,7 +51,7 @@ done
 
 
 #SCSI選択画面表示
-RESID=$(whiptail --title "RaSCSI MOUNT MENU" --menu "`rasctl -l`" 0 0 0 ${files[@]} 3>&2 2>&1 1>&3-)
+RESID=$(whiptail --title "RaSCSI MOUNT MENU" --backtitle "$TTL" --menu "`rasctl -l`" 0 0 0 ${files[@]} 3>&2 2>&1 1>&3-)
 RET=$?
 #echo $RET
 
@@ -76,7 +79,7 @@ else
 fi
 
 #イメージ選択画面表示
-RESFILE=$(whiptail --notags --title "Select IMAGE FILE" --menu "`rasctl -l`" 0 0 0 ${IMAGE[@]} 3>&2 2>&1 1>&3-)
+RESFILE=$(whiptail --notags --title "Select IMAGE FILE" --backtitle "$TTL" --menu "`rasctl -l`" 0 0 0 ${IMAGE[@]} 3>&2 2>&1 1>&3-)
 RET=$?
 #echo $RET
 #echo "ID:"$RESID "FILE:"$RESFILE
